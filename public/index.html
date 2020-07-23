@@ -12,35 +12,14 @@
     <!-- this containr is for our Vue instance -->
     <div id='main'>
         <h2>
-            Hiiiiii {{name}}!!!! Vue is AWESOME !!!
+            {{headline}}
         </h2>
-
-        <!-- we can do basic math in he vue -->
-        <h2>2*2 = {{2*2}}</h2>
-
-        <!-- we can also do some basic js -->
-        <h2>Name capitilized: {{name.toUpperCase() }}</h2>
-
-        <!-- we can also do conditionals -->
-        <!-- the below code will anly be shwon if seen is true -->
-        <h3 v-if='seen'>Yay, you can see me!!!!!</h3>
-        <h3 v-else>'seen' is falsy if you see this </h3>
-
-
-        <!-- we can also loop through an object / array -->
-        <ul>
-            <!-- "each" is a iterator, it can be called anything  -->
-            <!-- "cities" is the actual object we are looping through -->
-
-            <li v-for='each in cities' @click='myFunction'>{{each.name}}, {{each.country}}</li>
-            <!-- <li v-for='each in cities' v-on:click='myFunction'>{{each.name}}, {{each.country}}</li> -->
-            <!-- @click is a eventlistener, it can also be called with v-on:click. The callback function MUST be in the methods object !!-->
-
-
-        </ul>
-
-
-
+        <div class="container">
+            <div v-for="each in images" class="image">
+                <img :src="each.url" />
+                <label for=img>{{ each.title }}</label>
+            </div>
+        </div>
     </div>
 
 

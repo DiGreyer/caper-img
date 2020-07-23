@@ -1,20 +1,18 @@
 // console.log('Script is linked');
 
-const { AlexaForBusiness } = require("aws-sdk");
+// const { AlexaForBusiness } = require("aws-sdk");
 
 //here we will have all our Vue code
 
 (function () {
     new Vue({
-        el: '#main',   /// el represents HTML Element, in this case an element with id main, that has access to our Vue code
+        el: "#main", /// el represents HTML Element, in this case an element with id main, that has access to our Vue code
         //"data" is where Vue takes its data from, it updates automatically everytime the data has changed.. Rverything in "data" is "reactive" (lingo)
         data: {
-            name: 'Caper',
-            seen: 'true',
-            cities: []
+            headline: "Latest Images",
+            images: [],
 
             //// we move the object in our index. js
-
 
             // {
             //     name: 'Berlin',
@@ -28,8 +26,6 @@ const { AlexaForBusiness } = require("aws-sdk");
             //     name: "Halifax",
             //     country: 'Canada'
             // }
-
-
         }, //data ends
 
         // mounted is a lifcycle method that runs when the Vue instance renders
@@ -37,26 +33,24 @@ const { AlexaForBusiness } = require("aws-sdk");
         mounted: function () {
             // console.log("my  Vue has mounted!")
 
-            console.log('this outside axios is :', this);
+            console.log("this outside axios is :", this);
             var self = this;
 
-            axios.get('/cities').then(function (response) {
-                console.log('this inside axios is :', self);
-                console.log('response from /cities', response.data);
-                self.cities = respose.data;
+            axios.get("/images").then(function (response) {
+                console.log("this inside axios is :", self);
+                // console.log("response from /cities", response.data);
+                self.images = response.data;
 
                 /// axios will ALWAYS give a responce with data property!!! data is where all the requested information is
-            })
-
+            });
         },
 
-        methods: {
-            // WE cannot use a ES6 syntax (arrow fucntion, let, const) in Vue, because we dotn use a ..... and arrow fucntion might now work on browser. 
+        // methods: {
+        //     // WE cannot use a ES6 syntax (arrow fucntion, let, const) in Vue, because we dotn use a ..... and arrow fucntion might now work on browser.
 
-            myFunction: function () {
-                console.log("myFunction is running!!!")
-            }
-        }
+        //     myFunction: function () {
+        //         console.log("myFunction is running!!!");
+        //     },
+        // },
     });
-
 })();
