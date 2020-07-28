@@ -11,6 +11,7 @@
         props: ["id"],
         mounted: function () {
             var self = this;
+            console.log("this in component", this);
             console.log("postTitle: ", this.postTitle);
             console.log("ID in mounted of components: ", this.id);
             // make a request to server sending the id
@@ -35,12 +36,12 @@
                     description: "",
                     username: "",
                     optime: "",
-                    poster: "",
+                    commenter: "",
                     comment: "",
                     postertime: "",
                 },
                 comments: [],
-                poster: "",
+                commenter: "",
                 comment: "",
                 created_at: "",
             };
@@ -55,7 +56,7 @@
                 console.log("Someone wants to post a comment.");
                 var self = this;
                 var comment = {
-                    poster: this.poster,
+                    commenter: this.commenter,
                     comment: this.comment,
                     image_id: this.id,
                 };

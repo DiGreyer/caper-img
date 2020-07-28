@@ -7,6 +7,8 @@ const config = require("./config");
 //serve static files
 app.use(express.static("public"));
 
+app.use(express.json());
+
 ////////// multer boilerplate//////////////
 
 const multer = require("multer");
@@ -126,7 +128,7 @@ app.post("/image-post", (req, res) => {
 app.post("/post-comment", (req, res) => {
     console.log("The req.body in POST /post-comment: ", req.body);
     return db
-        .addComment(req.body.poster, req.body.comment, req.body.image_id)
+        .addComment(req.body.commenter, req.body.comment, req.body.image_id)
         .then((result) => {
             console.log("This is the result of addComment: ", result.rows);
             res.json(result.rows);

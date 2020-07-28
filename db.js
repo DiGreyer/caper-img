@@ -3,7 +3,7 @@ const db = spicedPg("postgres:caperimg:caper@localhost:5432/imgboard");
 
 //exports getImages request
 module.exports.getImages = () => {
-    return db.query(`SELECT url, title FROM images ORDER BY created_at DESC;`);
+    return db.query(`SELECT * FROM images ORDER BY created_at DESC;`);
 };
 
 module.exports.addImages = (url, username, title, description) => {
@@ -24,9 +24,9 @@ module.exports.getComments = (id) => {
     );
 };
 
-module.exports.addComment = (poster, comment, image_id) => {
+module.exports.addComment = (commenter, comment, image_id) => {
     return db.query(
-        `INSERT INTO comments (poster, comment, image_id) VALUES ($1, $2, $3) RETURNING *;`,
-        [poster, comment, image_id]
+        `INSERT INTO comments (commenter, comment, image_id) VALUES ($1, $2, $3) RETURNING *;`,
+        [commenter, comment, image_id]
     );
 };

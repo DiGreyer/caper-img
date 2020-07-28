@@ -52,7 +52,7 @@
                 <label for=img>{{ image.title }}</label>
             </div>
         </div>
-        <!-- <first-component></first-component> -->
+      
     </div>
 
     <!-- We can only return one element from the script tag. -->
@@ -62,18 +62,18 @@
             <img :src="image.url" />
             <p>Title: {{image.title}}</p>
             <p>Description: {{image.description}}</p>
-            <p>OP: {{image.username}}</p>
-            <p>OP Time: {{image.created_at}}</p>
+            <p>Username: {{image.username}}</p>
+            <p>Upload Time: {{image.created_at}}</p>
             <p>Post your comment here:</p>
-            <input v-model="poster" type="text" name="poster" placeholder="Username">
+            <input v-model="commenter" type="text" name="commenter" placeholder="Username">
             <input v-model="comment" type="text" name="comment" placeholder="Comment">
             <button @click="postComment">Submit</button>
             <p class="comments"
                 v-for="comment in comments"
                 v-if="comments.length">
-                Poster: {{comment.poster}}<br />
+                Commenter: {{comment.commenter}}<br />
                 Comment: {{comment.comment}}<br />
-                Poster Time: {{comment.created_at}}
+                Posted Time: {{comment.created_at}}
             </p>
         </div>
     </script>
