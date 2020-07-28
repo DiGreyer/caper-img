@@ -3,7 +3,7 @@ const db = spicedPg("postgres:caperimg:caper@localhost:5432/imgboard");
 
 //exports getImages request
 module.exports.getImages = () => {
-    return db.query(`SELECT * FROM images ORDER BY created_at DESC LIMIT 8;`);
+    return db.query(`SELECT * FROM images ORDER BY created_at DESC LIMIT 6;`);
 };
 
 module.exports.addImages = (url, username, title, description) => {
@@ -35,7 +35,7 @@ module.exports.showMore = (id) => {
     return db.query(
         `SELECT *, (
             SELECT id FROM images ORDER BY id ASC LIMIT 1
-        ) AS lowest_id FROM images WHERE id < $1 ORDER BY id DESC LIMIT 8;`,
+        ) AS lowest_id FROM images WHERE id < $1 ORDER BY id DESC LIMIT 6;`,
         [id]
     );
 };
