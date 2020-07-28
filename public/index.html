@@ -45,14 +45,29 @@
         <div class="container">
             <div 
                 class="image"
-                @click="selectedImage = image.id"
+               @click="selectedImage = image.id" 
                 v-for="image in images"
                 v-if="images.length">
                 <img :src="image.url" />
                 <label for=img>{{ image.title }}</label>
             </div>
+            
         </div>
-      
+      <button  id="more" @click="getMore">Load More</button>
+
+        <!-- hashing  -->
+        <!-- <div class="container">
+            <div 
+                class="image"
+                v-for="image in images"
+                v-if="images.length">
+                <a :href="'#' + image.id"></a>
+                <img :src="image.url" />
+                <label for=img>{{ image.title }}</label>
+            </div>
+        </div>  -->
+
+
     </div>
 
     <!-- We can only return one element from the script tag. -->

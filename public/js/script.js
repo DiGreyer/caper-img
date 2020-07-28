@@ -11,18 +11,18 @@
         props: ["id"],
         mounted: function () {
             var self = this;
-            console.log("this in component", this);
-            console.log("postTitle: ", this.postTitle);
-            console.log("ID in mounted of components: ", this.id);
+            // console.log("this in component", this);
+            // console.log("postTitle: ", this.postTitle);
+            // console.log("ID in mounted of components: ", this.id);
             // make a request to server sending the id
             // ask for all the information about the id
             axios
                 .post("/image-post", { id: this.id })
                 .then(function (response) {
-                    console.log("This is the response data: ", response.data);
+                    // console.log("This is the response data: ", response.data);
                     self.image = response.data.shift();
                     self.comments = response.data[0];
-                    console.log("These are the comments: ", response.data[0]);
+                    // console.log("These are the comments: ", response.data[0]);
                 })
                 .catch(function (err) {
                     console.log("Error in POST /image-post: ", err);
@@ -48,7 +48,6 @@
         },
         methods: {
             closeModal: function () {
-                console.log("I am emitting a msg to the vue instance");
                 this.$emit("close"); // is used in @close
             },
             postComment: function (e) {
@@ -84,6 +83,7 @@
         data: {
             headline: "Latest Images",
             selectedImage: null,
+            // selectedImage: location.hash.slice(1), //using the hash route to show img
             images: [],
             title: "",
             description: "",
@@ -119,16 +119,11 @@
                 console.log("this.username: ", this.username);
                 formData.append("username", this.username);
                 formData.append("file", this.file);
-                // ^ would be an empty object with console.log
-                // but the key-value pairs are added anyway
-                // v send info to the server
+
                 axios
                     .post("/upload", formData)
                     .then(function (response) {
-                        console.log(
-                            "Response from POST /upload: ",
-                            response.data
-                        );
+                        // console.log("Response from /upload: ",response.data);
                         self.images.unshift(response.data[0]);
                     })
                     .catch(function (err) {
@@ -140,78 +135,20 @@
                 // console.log("File: ", e.target.files[0]);
                 this.file = e.target.files[0];
             },
+            getMore: function () {
+                console.log("shown images", this.images);
+                var lastId = { id: this.images[this.images.length - 1].id };
+                var self = this;
+                axios
+
+                    .post("/show-more", lastId)
+                    .then(function (response) {
+                        self.images.push(...response.data);
+                    })
+                    .catch(function (err) {
+                        console.log("Error in POST /show-more: ", err);
+                    });
+            },
         },
     });
-
-    // new Vue({
-    //     el: "#main", /// el represents HTML Element, in this case an element with id main, that has access to our Vue code
-    //     //"data" is where Vue takes its data from, it updates automatically everytime the data has changed.. Rverything in "data" is "reactive" (lingo)
-    //     data: {
-    //         headline: "Latest Images",
-    //         selectedImage: null,
-    //         images: [],
-    //         title: "",
-    //         description: "",
-    //         username: "",
-    //         file: null,
-    //     }, //data ends
-
-    //     // mounted is a lifcycle method that runs when the Vue instance renders
-    //     // we want to check for our images in this method via axios.  Axios is promise based
-    //     mounted: function () {
-    //         // console.log("my  Vue has mounted!")
-
-    //         console.log("this outside axios is :", this);
-    //         var self = this;
-
-    //         axios.get("/images").then(function (response) {
-    //             console.log("this inside axios is :", self);
-    //             // console.log("response from /cities", response.data);
-    //             self.images = response.data;
-
-    //             /// axios will ALWAYS give a responce with data property!!! data is where all the requested information is
-    //         });
-    //     },
-
-    //     // methods: {
-    //     //     // WE cannot use a ES6 syntax (arrow fucntion, let, const) in Vue, because we dotn use a ..... and arrow fucntion might now work on browser.
-
-    //     methods: {
-    //         handleClick: function (e) {
-    //             e.preventDefault();
-    //             console.log(
-    //                 "Someone clicked on the button, that's what in it: ",
-    //                 this
-    //             );
-    //             var self = this;
-    //             var formData = new FormData();
-    //             formData.append("title", this.title);
-    //             formData.append("description", this.description);
-    //             formData.append("username", this.username);
-    //             formData.append("file", this.file);
-    //             // ^ would be an empty object with console.log
-    //             // but the key-value pairs are added anyway
-    //             // v send info to the server
-    //             axios
-    //                 .post("/upload", formData)
-    //                 .then(function (res) {
-    //                     console.log("Response from POST /upload: ", res);
-    //                     self.images.unshift(res.data);
-    //                 })
-    //                 .catch(function (err) {
-    //                     console.log("Error in POST /upload: ", err);
-    //                 });
-    //         },
-    //         handleChange: function (e) {
-    //             // console.log("handleChange is running");
-    //             // console.log("File: ", e.target.files[0]);
-    //             this.file = e.target.files[0];
-    //         },
-    //         closeMe: function () {
-    //             console.log("Vue got the emitted message!");
-    //             // close the modal
-    //             this.selectedImage = null;
-    //         },
-    //     },
-    // });
 })();

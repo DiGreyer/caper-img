@@ -138,4 +138,15 @@ app.post("/post-comment", (req, res) => {
         });
 });
 
+app.post("/show-more", (req, res) => {
+    return db
+        .showMore(req.body.id)
+        .then((result) => {
+            res.json(result.rows);
+        })
+        .catch((err) => {
+            console.log("Error in showMore: ", err);
+        });
+});
+
 app.listen(8080, () => console.log("Server is running"));
